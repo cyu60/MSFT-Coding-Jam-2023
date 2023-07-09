@@ -28,6 +28,8 @@ import {
   XMarkIcon,
   MagnifyingGlassCircleIcon,
   PlusIcon,
+  EyeIcon,
+  CogIcon,
 } from "@heroicons/react/24/outline";
 import {
   ChevronDownIcon,
@@ -58,27 +60,27 @@ export const Sidebar: React.FC<{
 }> = ({ children }) => {
   const router = useRouter();
   const { pathname } = router;
-  const navigation = [
-    {
-      name: "My Trips",
-      href: "/home",
-      icon: HomeIcon,
-      current: pathname === "/home",
-    },
-    {
-      name: "Explore Trips",
-      href: "/explore",
-      icon: MagnifyingGlassCircleIcon,
-      current: pathname === "/explore",
-    },
-    {
-      name: "Create Trip",
-      href: "/create",
-      icon: PlusIcon,
-      current: pathname === "/create",
-    },
-    //   { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
-  ];
+  
+const navigation = [
+  {
+    name: "Dashboard",
+    href: "/dashboard",
+    icon: HomeIcon,
+    current: pathname === "/dashboard",
+  },
+  {
+    name: "Previous Reports",
+    href: "/previous-reports",
+    icon: EyeIcon,
+    current: pathname === "/previous-reports",
+  },
+  {
+    name: "Notification Settings",
+    href: "/notification-settings",
+    icon: CogIcon,
+    current: pathname === "/notification-settings",
+  },
+];
   // export default function Sidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
