@@ -6,6 +6,8 @@ import {
   OpenAIApi,
 } from "openai";
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 if (!process.env.NEXT_PUBLIC_OPEN_AI_API_KEY) {
   throw new Error("Missing API key");
@@ -15,6 +17,7 @@ const configuration = new Configuration({
 });
 
 const openai = new OpenAIApi(configuration);
+
 // Dummy conversation for testing
 const dummyConversation: ChatCompletionRequestMessage[] = [
   { role: "user", content: "Hi, I'm planning a trip to Europe." },
@@ -23,12 +26,53 @@ const dummyConversation: ChatCompletionRequestMessage[] = [
     content:
       "Great! I can help with that. Where in Europe are you planning to go?",
   },
-  { role: "user", content: "I need to track my activities and time." },
+  {
+    role: "user",
+    content: "I'm thinking of visiting Paris, Rome, and Barcelona.",
+  },
+  {
+    role: "assistant",
+    content: "Sounds like a fantastic trip! When are you planning to go?",
+  },
+  {
+    role: "user",
+    content: "I'm planning to go in the summer, around August.",
+  },
   {
     role: "assistant",
     content:
-      "No problem! Here's a list of your activities and the time spent on each:",
+      "That's a popular time to visit Europe. How long will you be staying?",
   },
+  {
+    role: "user",
+    content: "I'm planning to stay for three weeks.",
+  },
+  {
+    role: "assistant",
+    content:
+      "Three weeks should give you enough time to explore these cities thoroughly. Do you need help with booking flights or accommodations?",
+  },
+  {
+    role: "user",
+    content:
+      "Yes, I would appreciate some recommendations for affordable accommodations.",
+  },
+  {
+    role: "assistant",
+    content:
+      "Sure! For Paris, you can consider staying in budget hotels like Ibis or Holiday Inn Express. In Rome, budget options like Hotel Artemide or Hotel Quirinale are good choices. And in Barcelona, you can check out Hotel Acta Antibes or Hotel Ronda House. Would you like me to help with booking?",
+  },
+  {
+    role: "user",
+    content:
+      "Yes, please! Can you find me the best deals for flights from my location to these cities?",
+  },
+  {
+    role: "assistant",
+    content:
+      "Sure! Can you please provide me with your current location and travel dates? I'll find the best flight options for you.",
+  },
+  // ... continue with more conversation messages
 ];
 
 const initialQuestion: ChatCompletionRequestMessage = {
@@ -36,17 +80,16 @@ const initialQuestion: ChatCompletionRequestMessage = {
   content: "Hi, how can I help you today?",
 };
 
+
 const Home: NextPage = () => {
   const [userInput, setUserInput] = useState("");
-  const [conversation, setConversation] = useState<
-    ChatCompletionRequestMessage[]
-  >([initialQuestion]);
   const [summaryReport, setSummaryReport] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const generateSummaryReport = async () => {
     setIsLoading(true);
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const assistantResponseObj = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: [
@@ -102,7 +145,11 @@ const Home: NextPage = () => {
             {summaryReport && (
               <div className="mt-4 bg-gray-100 p-3">
                 <p className="text-lg font-semibold">Summary Report:</p>
-                <p>{summaryReport}</p>
+                {/* <ReactMarkdown children={summaryReport} remarkPlugins={[remarkGfm]} /> */}
+                <ReactMarkdown>{summaryReport}</ReactMarkdown>
+                {/* <ReactMarkdown>
+                {summaryReport}
+                </ReactMarkdown> */}
               </div>
             )}
           </div>
@@ -156,6 +203,46 @@ const ActivitiesList: React.FC = () => {
     </div>
   );
 };
+// const Home: NextPage = () => {
+//   const [userInput, setUserInput] = useState("");
+//   const [conversation, setConversation] = useState<
+//     ChatCompletionRequestMessage[]
+//   >([initialQuestion]);
+
+//   // useEffect(() => {
+//   //   console.log(userInput);
+//   // }, [userInput]);
+//   return (
+//     <>
+//       <Head>
+//         <title>Chat with me App</title>
+//         <meta name="description" content="Chat with me" />
+//         <link rel="icon" href="" />
+//       </Head>
+//       <main className="flex min-h-screen flex-col items-center justify-center bg-slate-800">
+//         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
+//           <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
+//             Chat with me!
+//           </h1>
+//           <div className="min-h-full w-full max-w-xl divide-y-4 divide-slate-800 bg-white">
+//             {/* {dummyConversation.map((c, i) => (
+//               <ConversationBox conversation={c} key={i} />
+//             ))} */}
+//             {conversation.map((c, i) => (
+//               <ConversationBox conversation={c} key={i} />
+//             ))}
+//             <UserInputBox
+//               userInput={userInput}
+//               setUserInput={setUserInput}
+//               conversation={conversation}
+//               setConversation={setConversation}
+//             />
+//           </div>
+//         </div>
+//       </main>
+//     </>
+//   );
+// };
 
 const ConversationBox: React.FC<{
   conversation: ChatCompletionRequestMessage;
