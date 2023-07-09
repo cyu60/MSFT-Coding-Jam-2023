@@ -35,7 +35,7 @@ import {
   ChevronDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
-import { MapLogo } from "./MapLogo";
+// import { MapLogo } from "./MapLogo";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -156,7 +156,7 @@ const navigation = [
                         alt="AI trip planner"
                       /> */}
                       <Link href={"/"}>
-                        <MapLogo></MapLogo>
+                        {/* <MapLogo></MapLogo> */}
                       </Link>
                     </div>
                     <nav className="flex flex-1 flex-col">
@@ -236,7 +236,7 @@ const navigation = [
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
               <Link href={"/"}>
-                <MapLogo></MapLogo>
+                {/* <MapLogo></MapLogo> */}
               </Link>
             </div>
             <nav className="flex flex-1 flex-col">
