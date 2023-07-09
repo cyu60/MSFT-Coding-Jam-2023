@@ -121,16 +121,38 @@ const Home: NextPage = () => {
 };
 
 const ActivitiesList: React.FC = () => {
+  const colorClasses = {
+    yellow: "bg-yellow-500",
+    green: "bg-green-500",
+    blue: "bg-blue-500",
+    gray: "bg-gray-500",
+  };
+
   const activities = [
     {
       name: "Research",
       time: "4 hours",
       icon: <WorkIcon />,
-      color: "yellow",
+      color: colorClasses.yellow,
     },
-    { name: "Reading", time: "2 hours", icon: <StudyIcon />, color: "green" },
-    { name: "Coding", time: "1 hour", icon: <CodeIcon />, color: "blue" },
-    { name: "Break", time: "30 minutes", icon: <BreakIcon />, color: "gray" },
+    {
+      name: "Reading",
+      time: "2 hours",
+      icon: <StudyIcon />,
+      color: colorClasses.green,
+    },
+    {
+      name: "Coding",
+      time: "1 hour",
+      icon: <CodeIcon />,
+      color: colorClasses.blue,
+    },
+    {
+      name: "Break",
+      time: "30 minutes",
+      icon: <BreakIcon />,
+      color: colorClasses.gray,
+    },
   ];
 
   return (
@@ -155,7 +177,7 @@ const ActivitiesList: React.FC = () => {
             className="mt-2 flex gap-4 rounded border p-3 transition-shadow hover:shadow-md"
           >
             <div
-              className={`flex h-10 w-10 items-center justify-center rounded-full bg-${activity.color}-500`}
+              className={`flex h-10 w-10 items-center justify-center rounded-full ${activity.color}`}
             >
               {activity.icon}
             </div>
