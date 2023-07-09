@@ -1,3 +1,7 @@
 # MSFT-Coding-Jam-2023
 
-Test
+ChronoMate
+
+Microsoft Intern Coding Jam 2023 
+
+Look at ReadMe in the internCodeJam folder for more details. 
